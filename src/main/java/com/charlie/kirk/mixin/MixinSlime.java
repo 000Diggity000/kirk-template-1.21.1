@@ -31,13 +31,6 @@ public abstract class MixinSlime extends Mob implements Enemy {
 
     @Overwrite
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
-        RandomSource randomsource = level.getRandom();
-        int i = randomsource.nextInt(3);
-        if (i < 2 && randomsource.nextFloat() < 0.5F * difficulty.getSpecialMultiplier()) {
-            ++i;
-        }
-
-        int j = 1 << i;
         this.setSize(10, true);
         return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
     }
