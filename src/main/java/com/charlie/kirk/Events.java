@@ -13,6 +13,9 @@ public class Events {
         // Is this the tab we want to add to?
         if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
             event.accept(Kirk.COTTON.get());
+        }else if(event.getTabKey() == CreativeModeTabs.COMBAT)
+        {
+            event.accept(Kirk.BAT_ITEM.get());
         }
     }
 }

@@ -1,5 +1,8 @@
 package com.charlie.kirk;
 
+import com.charlie.kirk.item.BatItem;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.*;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -8,10 +11,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -42,11 +41,13 @@ public class Kirk {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MODID);
     // Create a Deferred Register to hold Items which will all be registered under the "kirk" namespace
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
+    public static final ResourceLocation BASE_KNOCKBACK_ID = ResourceLocation.withDefaultNamespace("base_knockback");
     public static final DeferredItem<Item> COTTON = ITEMS.registerItem(
             "cotton",
             Item::new, // The factory that the properties will be passed into.
             new Item.Properties() // The properties to use.
     );
+    public static final DeferredItem<BatItem> BAT_ITEM = ITEMS.register("bat_item", () -> new BatItem(Tiers.WOOD, (new Item.Properties()).attributes(BatItem.createAttributesBat(Tiers.WOOD, 3, -2.4F, 2.5f))));
 
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
