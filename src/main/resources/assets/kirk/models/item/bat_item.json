@@ -2,7 +2,7 @@
 	"format_version": "1.9.0",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"6": "kirk:item/bat_item"
+		"6": "Screenshot 2025-12-23 205957"
 	},
 	"elements": [
 		{
@@ -71,5 +71,24 @@
 			}
 		}
 	],
-	"display": {}
+	"display": {
+		"ground": {
+			"rotation": [0, 0, 95],
+			"translation": [4.75, 0, 0]
+		},
+		"gui": {
+			"rotation": [-41, -13, -35],
+			"translation": [-2.25, -3, 0]
+		},
+		"head": {
+			"translation": [0, 11, 0]
+		},
+		"fixed": {
+			"rotation": [0, 0, 48],
+			"translation": [3, -3, 0]
+		},
+		"on_shelf": {
+			"translation": [0, 0, -2.75]
+		}
+	}
 }
