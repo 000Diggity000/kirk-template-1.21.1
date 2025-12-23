@@ -57,7 +57,7 @@ public class Kirk {
     );
     public static final DeferredItem<BatItem> BAT_ITEM = ITEMS.register("bat_item", () -> new BatItem(Tiers.WOOD, (new Item.Properties()).attributes(BatItem.createAttributesBat(Tiers.WOOD, 3, -2.4F, 2.5f))));
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, MODID);
-    public static final Supplier<EntityType<SahurMob>> SAHUR = ENTITY_TYPES.register("sahur", () -> EntityType.Builder.of(SahurMob::new, MobCategory.MONSTER).sized(1f, 3f).build("sahur"));
+    public static final Supplier<EntityType<SahurMob>> SAHUR = ENTITY_TYPES.register("sahur", () -> EntityType.Builder.of(SahurMob::new, MobCategory.MONSTER).sized(1f, 3f).setTrackingRange(10).build("sahur"));
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
