@@ -3,7 +3,10 @@ package com.charlie.kirk;
 import com.charlie.kirk.entity.SahurMob;
 import com.charlie.kirk.item.BatItem;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.*;
 import org.slf4j.Logger;
@@ -33,6 +36,8 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.function.Supplier;
+
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(Kirk.MODID)
 public class Kirk {
@@ -51,8 +56,8 @@ public class Kirk {
             new Item.Properties() // The properties to use.
     );
     public static final DeferredItem<BatItem> BAT_ITEM = ITEMS.register("bat_item", () -> new BatItem(Tiers.WOOD, (new Item.Properties()).attributes(BatItem.createAttributesBat(Tiers.WOOD, 3, -2.4F, 2.5f))));
-    //public static final DeferredRegister<EntityType<?>> = DeferredRegister
-    //public static final EntityType<SahurMob> SAHUR;
+    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, MODID);
+    public static final Supplier<EntityType<SahurMob>> SAHUR = ENTITY_TYPES.register("sahur", () -> EntityType.Builder.of(SahurMob::new, MobCategory.MONSTER).sized(1f, 3f).build("sahur"));
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
@@ -64,6 +69,7 @@ public class Kirk {
         BLOCKS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so items get registered
         ITEMS.register(modEventBus);
+        ENTITY_TYPES.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (Kirk) to respond directly to events.

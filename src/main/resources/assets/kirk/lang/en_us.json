@@ -10,5 +10,6 @@
   "kirk.configuration.logDirtBlock": "Log Dirt Block",
   "kirk.configuration.magicNumberIntroduction": "Magic Number Text",
   "kirk.configuration.magicNumber": "Magic Number",
-  "item.kirk.cotton": "Cotton"
+  "item.kirk.cotton": "Cotton",
+  "item.kirk.bat_item": "Bat"
 }

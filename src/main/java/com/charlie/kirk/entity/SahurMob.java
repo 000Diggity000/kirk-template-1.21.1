@@ -14,9 +14,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 public class SahurMob extends Monster {
-    protected SahurMob(EntityType<? extends Monster> entityType, Level level) {
+    public SahurMob(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
     }
+
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
