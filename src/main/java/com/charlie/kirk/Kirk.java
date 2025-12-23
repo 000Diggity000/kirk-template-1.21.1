@@ -1,7 +1,10 @@
 package com.charlie.kirk;
 
+import com.charlie.kirk.entity.SahurMob;
 import com.charlie.kirk.item.BatItem;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.*;
 import org.slf4j.Logger;
 
@@ -48,7 +51,8 @@ public class Kirk {
             new Item.Properties() // The properties to use.
     );
     public static final DeferredItem<BatItem> BAT_ITEM = ITEMS.register("bat_item", () -> new BatItem(Tiers.WOOD, (new Item.Properties()).attributes(BatItem.createAttributesBat(Tiers.WOOD, 3, -2.4F, 2.5f))));
-
+    //public static final DeferredRegister<EntityType<?>> = DeferredRegister
+    //public static final EntityType<SahurMob> SAHUR;
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
