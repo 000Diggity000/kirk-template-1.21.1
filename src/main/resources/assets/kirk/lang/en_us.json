@@ -1,0 +1,13 @@
+{
+  "itemGroup.kirk": "Example Mod Tab",
+  "block.kirk.example_block": "Example Block",
+  "item.kirk.example_item": "Example Item",
+
+  "kirk.configuration.title": "Kirk Configs",
+  "kirk.configuration.section.kirk.common.toml": "Kirk Configs",
+  "kirk.configuration.section.kirk.common.toml.title": "Kirk Configs",
+  "kirk.configuration.items": "Item List",
+  "kirk.configuration.logDirtBlock": "Log Dirt Block",
+  "kirk.configuration.magicNumberIntroduction": "Magic Number Text",
+  "kirk.configuration.magicNumber": "Magic Number"
+}
