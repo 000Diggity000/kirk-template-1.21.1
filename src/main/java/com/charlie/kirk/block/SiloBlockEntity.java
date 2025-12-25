@@ -1,5 +1,6 @@
 package com.charlie.kirk.block;
 
+import com.charlie.kirk.Kirk;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
@@ -11,8 +12,12 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class SiloBlockEntity extends BaseContainerBlockEntity {
-    protected SiloBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
+    public SiloBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
+    }
+
+    public SiloBlockEntity(BlockPos blockPos, BlockState blockState) {
+        super((BlockEntityType<?>) Kirk.SILO_BLOCK_ENTITY, blockPos, blockState);
     }
 
     @Override

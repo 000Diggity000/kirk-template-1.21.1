@@ -13,7 +13,7 @@ import java.util.function.BiPredicate;
 import java.util.function.Function;
 
 public class TripleVerticalBlockCombiner {
-    public static <S extends BlockEntity> NeighborsCombineResult<S> combineWithNeigbours(BlockEntityType<S> blockEntityType, Function<BlockState, TripleVerticalBlockCombiner.BlockType> doubleBlockTypeGetter, Function<BlockState, Direction> directionGetter, DirectionProperty directionProperty, BlockState state, LevelAccessor level, BlockPos pos) {
+    public static <S extends BlockEntity> NeighborsCombineResult<S> combineWithNeigbours(BlockEntityType<S> blockEntityType, Function<BlockState, TripleVerticalBlockCombiner.BlockType> doubleBlockTypeGetter, BlockState state, LevelAccessor level, BlockPos pos) {
         S s = blockEntityType.getBlockEntity(level, pos);
         if (s == null) {
             return Combiner::acceptNone;
@@ -26,11 +26,11 @@ public class TripleVerticalBlockCombiner {
             if (flag) {
                 return new NeighborsCombineResult.Single<S>(s);
             } else {
-                BlockPos blockpos = pos.relative((Direction)directionGetter.apply(state));
+                BlockPos blockpos = pos.relative(Direction.UP);
                 BlockState blockstate = level.getBlockState(blockpos);
                 if (blockstate.is(state.getBlock())) {
                     TripleVerticalBlockCombiner.BlockType doubleblockcombiner$blocktype1 = (TripleVerticalBlockCombiner.BlockType)doubleBlockTypeGetter.apply(blockstate);
-                    if (doubleblockcombiner$blocktype1 != TripleVerticalBlockCombiner.BlockType.SINGLE && doubleblockcombiner$blocktype != doubleblockcombiner$blocktype1 && blockstate.getValue(directionProperty) == state.getValue(directionProperty)) {
+                    if (doubleblockcombiner$blocktype1 != TripleVerticalBlockCombiner.BlockType.SINGLE && doubleblockcombiner$blocktype != doubleblockcombiner$blocktype1) {
 
                         S s1 = blockEntityType.getBlockEntity(level, blockpos);
                         if (s1 != null) {
