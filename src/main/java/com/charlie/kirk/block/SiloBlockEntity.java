@@ -12,12 +12,15 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class SiloBlockEntity extends BaseContainerBlockEntity {
+    private NonNullList<ItemStack> items;
     public SiloBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
+        this.items = NonNullList.withSize(27, ItemStack.EMPTY);
     }
 
     public SiloBlockEntity(BlockPos blockPos, BlockState blockState) {
-        super((BlockEntityType<?>) Kirk.SILO_BLOCK_ENTITY, blockPos, blockState);
+        super(Kirk.SILO_BLOCK_ENTITY.get(), blockPos, blockState);
+        this.items = NonNullList.withSize(27, ItemStack.EMPTY);
     }
 
     @Override
@@ -27,7 +30,7 @@ public class SiloBlockEntity extends BaseContainerBlockEntity {
 
     @Override
     protected NonNullList<ItemStack> getItems() {
-        return null;
+        return items;
     }
 
     @Override
@@ -42,6 +45,6 @@ public class SiloBlockEntity extends BaseContainerBlockEntity {
 
     @Override
     public int getContainerSize() {
-        return 0;
+        return 27;
     }
 }

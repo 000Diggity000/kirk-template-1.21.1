@@ -1,6 +1,9 @@
 package com.charlie.kirk;
 
+import com.charlie.kirk.block.AbstractSiloBlock;
+import com.charlie.kirk.block.SiloBlock;
 import com.charlie.kirk.block.SiloBlockEntity;
+import com.charlie.kirk.block.SiloType;
 import com.charlie.kirk.entity.SahurMob;
 import com.charlie.kirk.item.BatItem;
 import com.mojang.serialization.MapCodec;
@@ -8,15 +11,18 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.properties.ChestType;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -45,15 +51,21 @@ public class Kirk {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES =
             DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MODID);
-    public static final DeferredBlock<Block> SILO_BLOCK = BLOCKS.registerBlock(
-            "silo_block",
-            Block::new, // The factory that the properties will be passed into.
-            BlockBehaviour.Properties.of() // The properties to use.
-    );
+
+
+    public static final DeferredBlock<SiloBlock> SILO_BLOCK =
+            BLOCKS.register("silo_block", () -> new SiloBlock(BlockBehaviour.Properties.of().destroyTime(2.0f)));
     public static final DeferredItem<BlockItem> SILO_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(
             "silo_block",
             SILO_BLOCK,
             new Item.Properties()
+    );
+    public static final EnumProperty<SiloType> SILO_TYPE = EnumProperty.create("type", SiloType.class);;
+    public static final ResourceLocation BASE_KNOCKBACK_ID = ResourceLocation.withDefaultNamespace("base_knockback");
+    public static final DeferredItem<Item> COTTON = ITEMS.registerItem(
+            "cotton",
+            Item::new, // The factory that the properties will be passed into.
+            new Item.Properties() // The properties to use.
     );
     public static final Supplier<BlockEntityType<SiloBlockEntity>> SILO_BLOCK_ENTITY = BLOCK_ENTITY_TYPES.register(
             "silo_block_entity",
@@ -68,20 +80,14 @@ public class Kirk {
                     // Build using null; vanilla does some datafixer shenanigans with the parameter that we don't need.
                     .build(null)
     );
-    public static final ResourceLocation BASE_KNOCKBACK_ID = ResourceLocation.withDefaultNamespace("base_knockback");
-    public static final DeferredItem<Item> COTTON = ITEMS.registerItem(
-            "cotton",
-            Item::new, // The factory that the properties will be passed into.
-            new Item.Properties() // The properties to use.
-    );
     public static final DeferredItem<BatItem> BAT_ITEM = ITEMS.register("bat_item", () -> new BatItem(Tiers.WOOD, (new Item.Properties()).attributes(BatItem.createAttributesBat(Tiers.WOOD, 3, -2.4F, 1f))));
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, MODID);
     public static final Supplier<EntityType<SahurMob>> SAHUR = ENTITY_TYPES.register("sahur", () -> EntityType.Builder.of(SahurMob::new, MobCategory.MONSTER).sized(1f, 3f).setTrackingRange(10).build("sahur"));
     public static final DeferredRegister<MapCodec<? extends Block>> CODECS = DeferredRegister.create(BuiltInRegistries.BLOCK_TYPE, MODID);
-    //public static final Supplier<MapCodec<? extends AbstractChestBlock<SiloBlockEntity>>> SIMPLE_CODEC = CODECS.register(
-    //        "silo_block",
-    //        () -> BlockBehaviour.simpleCodec(SiloBlock::new)
-    //);
+    public static final Supplier<MapCodec<? extends AbstractSiloBlock<SiloBlockEntity>>> SIMPLE_CODEC = CODECS.register(
+            "silo_block",
+            () -> BlockBehaviour.simpleCodec(SiloBlock::new)
+    );
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
