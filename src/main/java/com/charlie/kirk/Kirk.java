@@ -7,16 +7,19 @@ import com.charlie.kirk.block.SiloType;
 import com.charlie.kirk.entity.SahurMob;
 import com.charlie.kirk.item.BatItem;
 import com.mojang.serialization.MapCodec;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.ChestType;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
+import net.neoforged.fml.common.asm.enumextension.EnumProxy;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -37,6 +40,7 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(Kirk.MODID)
@@ -52,7 +56,6 @@ public class Kirk {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES =
             DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MODID);
 
-
     public static final DeferredBlock<SiloBlock> SILO_BLOCK =
             BLOCKS.register("silo_block", () -> new SiloBlock(BlockBehaviour.Properties.of().destroyTime(2.0f)));
     public static final DeferredItem<BlockItem> SILO_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(
@@ -60,7 +63,7 @@ public class Kirk {
             SILO_BLOCK,
             new Item.Properties()
     );
-    public static final EnumProperty<SiloType> SILO_TYPE = EnumProperty.create("type", SiloType.class);;
+
     public static final ResourceLocation BASE_KNOCKBACK_ID = ResourceLocation.withDefaultNamespace("base_knockback");
     public static final DeferredItem<Item> COTTON = ITEMS.registerItem(
             "cotton",
