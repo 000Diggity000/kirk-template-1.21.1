@@ -49,109 +49,39 @@ public class SiloBlock extends AbstractSiloBlock<SiloBlockEntity> implements Ent
         return Kirk.SIMPLE_CODEC.get();
     }
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        SiloType chesttype = SiloType.SINGLE;
-        boolean flag = context.isSecondaryUseActive();
-        Direction direction1 = context.getClickedFace();
-        BlockState blockstate = context.getLevel().getBlockState(context.getClickedPos().relative(Direction.DOWN));
-        BlockState blockstate1 = context.getLevel().getBlockState(context.getClickedPos().relative(Direction.UP));
-        if (!flag) {
-            if (blockstate.is(this) && blockstate.getValue(TYPE) == SiloType.SINGLE) {
-                if(blockstate1.is(this) && blockstate.getValue(TYPE) == SiloType.SINGLE)
-                {
-                    if(context.getLevel().getBlockState(context.getClickedPos().relative(Direction.DOWN).relative(Direction.DOWN)).is(this) && context.getLevel().getBlockState(context.getClickedPos().relative(Direction.DOWN).relative(Direction.DOWN)).getValue(TYPE) == SiloType.SINGLE)
-                    {
-                        Kirk.LOGGER.info("top");
-                        chesttype = SiloType.TOP;
-                    }else{
-                        Kirk.LOGGER.info("middle");
-                        chesttype = SiloType.MIDDLE;
-                    }
+        return (BlockState)this.defaultBlockState().setValue(TYPE, selectCorrectType(context.getLevel(), context.getClickedPos(), context.getLevel().getBlockState(context.getClickedPos())));
 
-                }else if(!blockstate1.isAir())
-                {
-                    Kirk.LOGGER.info("middle");
-                    chesttype = SiloType.MIDDLE;
-                }else{
-                    Kirk.LOGGER.info("middle");
-                    chesttype = SiloType.MIDDLE;
-                }
-
-            }else if (blockstate.is(this) && blockstate.getValue(TYPE) == SiloType.MIDDLE) {
-                Kirk.LOGGER.info("top");
-                chesttype = SiloType.TOP;
-            }
-            else if (blockstate.is(this) && blockstate1.getValue(TYPE) == SiloType.MIDDLE) {
-                Kirk.LOGGER.info("bottom");
-                chesttype = SiloType.BOTTOM;
-            }
-
-        }
-
-        return (BlockState)((BlockState)((BlockState)this.defaultBlockState()).setValue(TYPE, chesttype));
+        //return (BlockState)((BlockState)((BlockState)this.defaultBlockState()).setValue(TYPE, chesttype));
 
     }
+    public SiloType selectCorrectType(LevelAccessor level, BlockPos pos, BlockState state)
+    {
+        BlockState downBlock = level.getBlockState(pos.relative(Direction.DOWN));
+        BlockState downDownBlock = level.getBlockState(pos.relative(Direction.DOWN).relative(Direction.DOWN));
+        BlockState upBlock = level.getBlockState(pos.relative(Direction.UP));
+        BlockState upUpBlock = level.getBlockState(pos.relative(Direction.UP).relative(Direction.UP));
+        if(downBlock.is(this) && (downBlock.getValue(TYPE) == SiloType.SINGLE || downBlock.getValue(TYPE) == SiloType.BOTTOM) && upBlock.is(this) && (upBlock.getValue(TYPE) == SiloType.SINGLE || upBlock.getValue(TYPE) == SiloType.TOP))
+        {
+            Kirk.LOGGER.info("middle");
+            Kirk.LOGGER.info(String.valueOf(pos.getY()));
+            return SiloType.MIDDLE;
+        }else if(downBlock.is(this) && (downBlock.getValue(TYPE) == SiloType.SINGLE || downBlock.getValue(TYPE) == SiloType.MIDDLE) && downDownBlock.is(this) && (downDownBlock.getValue(TYPE) == SiloType.SINGLE || downDownBlock.getValue(TYPE) == SiloType.BOTTOM))
+        {
+            Kirk.LOGGER.info("top");
+            Kirk.LOGGER.info(String.valueOf(pos.getY()));
+            return SiloType.TOP;
+        }else if(upBlock.is(this) && (upBlock.getValue(TYPE) == SiloType.SINGLE || upBlock.getValue(TYPE) == SiloType.MIDDLE) && upUpBlock.is(this) && (upUpBlock.getValue(TYPE) == SiloType.SINGLE || upUpBlock.getValue(TYPE) == SiloType.TOP))
+        {
+            Kirk.LOGGER.info("bottom");
+            Kirk.LOGGER.info(String.valueOf(pos.getY()));
+            return SiloType.BOTTOM;
+        }
+        return SiloType.SINGLE;
+    }
     protected BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
-        BlockState downBlock = level.getBlockState(currentPos.relative(Direction.DOWN));
-        BlockState upBlock = level.getBlockState(currentPos.relative(Direction.UP));
-        BlockState upUpBlock = level.getBlockState(currentPos.relative(Direction.UP).relative(Direction.UP));
-        SiloType siloTypeDown = null;
-        SiloType siloTypeUp = null;
-        SiloType siloTypeUpUp = null;
-        if(downBlock.is(this))
-        {
-            siloTypeDown = (SiloType)downBlock.getValue(TYPE);
-        }
-        if(upBlock.is(this))
-        {
-            siloTypeUp = (SiloType)upBlock.getValue(TYPE);
-        }
-        if(upUpBlock.is(this))
-        {
-            siloTypeUpUp = (SiloType)upUpBlock.getValue(TYPE);
-        }
-        if (siloTypeUp != null && siloTypeDown != null) {
-            if (state.getValue(TYPE) == SiloType.SINGLE && siloTypeUp == SiloType.SINGLE && siloTypeDown == SiloType.SINGLE) {
-                Kirk.LOGGER.info("middle");
-                return (BlockState)state.setValue(TYPE, SiloType.MIDDLE);
-            }else if(state.getValue(TYPE) == SiloType.SINGLE && siloTypeUp == SiloType.MIDDLE && siloTypeUpUp == SiloType.TOP)
-            {
-                Kirk.LOGGER.info("top");
-                return (BlockState)state.setValue(TYPE, SiloType.BOTTOM);
-            }else if(siloTypeUpUp != null)
-            {
-                if(state.getValue(TYPE) == SiloType.SINGLE && siloTypeUp == SiloType.SINGLE && siloTypeUpUp == SiloType.SINGLE)
-                {
-                    Kirk.LOGGER.info("top");
-                    return (BlockState)state.setValue(TYPE, SiloType.BOTTOM);
-                }
-            }
-        }else if(siloTypeUp != null)
-        {
-            if(state.getValue(TYPE) == SiloType.SINGLE && siloTypeUp == SiloType.MIDDLE)
-            {
-                Kirk.LOGGER.info("bottom");
-                return (BlockState)state.setValue(TYPE, SiloType.BOTTOM);
-            }
-        }else if(siloTypeDown != null)
-        {
-            if(state.getValue(TYPE) == SiloType.SINGLE && siloTypeDown == SiloType.MIDDLE)
-            {
-                Kirk.LOGGER.info("top");
-                return (BlockState)state.setValue(TYPE, SiloType.TOP);
-            }
-        }
-        if(facingState.isAir() && facing == Direction.DOWN && state.getValue(TYPE) == SiloType.TOP)
-        {
-            Kirk.LOGGER.info("single from top");
-            return (BlockState)state.setValue(TYPE, SiloType.SINGLE);
-        }
-        if(facingState.isAir() && facing == Direction.UP && state.getValue(TYPE) == SiloType.BOTTOM)
-        {
-            Kirk.LOGGER.info("single from bottom");
-            return (BlockState)state.setValue(TYPE, SiloType.SINGLE);
-        }
+        return (BlockState)this.defaultBlockState().setValue(TYPE, selectCorrectType(level, currentPos, state));
 
-        return super.updateShape(state, facing, facingState, level, currentPos, facingPos);
+        //return super.updateShape(state, facing, facingState, level, currentPos, facingPos);
     }
     @javax.annotation.Nullable
     private boolean candidatePartnerFacing(BlockPlaceContext context, Direction direction) {
