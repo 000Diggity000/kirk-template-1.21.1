@@ -20,6 +20,7 @@ public class KirkItemProvider extends ItemModelProvider {
         //withExistingParent(MyItemsClass.EXAMPLE_ITEM.getId().toString(), mcLoc("item/generated")).texture("layer0", "item/example_item");
         // The above line is so common that there is a shortcut for it. Note that the item registry name and the
         // texture path, relative to textures/item, must match.
+        withExistingParent(Kirk.SILO_BLOCK_ITEM.getId().toString(), modLoc("block/silo_block"));
         basicItem(Kirk.COTTON.get());
     }
 }

@@ -1,0 +1,25 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"parent": "silo_bottom",
+	"texture_size": [64, 64],
+	"textures": {
+		"1": "kirk:block/silo_bottom",
+		"particle": "kirk:block/silo_top"
+	},
+	"elements": [
+		{
+			"from": [1, 0, 1],
+			"to": [15, 16, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [1, 0, 1]},
+			"faces": {
+				"north": {"uv": [3.5, 4, 7, 8], "texture": "#1"},
+				"east": {"uv": [3.5, 0, 7, 4], "texture": "#1"},
+				"south": {"uv": [0, 4, 3.5, 8], "texture": "#1"},
+				"west": {"uv": [3.5, 4, 7, 8], "texture": "#1"},
+				"up": {"uv": [10.5, 3.5, 7, 0], "texture": "#1"},
+				"down": {"uv": [10.5, 3.5, 7, 7], "texture": "#1"}
+			}
+		}
+	]
+}

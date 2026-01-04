@@ -1,21 +1,28 @@
 package com.charlie.kirk.block;
 
 import com.charlie.kirk.Kirk;
+import com.charlie.kirk.menu.SiloMenu;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ChestMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.AbstractChestBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -25,18 +32,41 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class SiloBlock extends AbstractSiloBlock<SiloBlockEntity> implements EntityBlock {
+    public static final MapCodec<SiloBlock> CODEC = simpleCodec(SiloBlock::new);
     public static final EnumProperty<SiloType> TYPE = EnumProperty.create("type", SiloType.class);
+    private static final VoxelShape SINGLE_SHAPE = Block.box(0, 0, 0, 16, 16, 16);
+    private static final VoxelShape BOTTOM_SHAPE = Block.box(1, 0, 1, 15, 16, 15);
+    private static final VoxelShape TOP_SHAPE = Block.box(1, 0, 1, 15, 8, 15);
     public SiloBlock(Properties properties) {
         super(properties);
         registerDefaultState(stateDefinition.any()
                 .setValue(TYPE, SiloType.SINGLE)
         );
+    }
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (level.isClientSide) {
+            return InteractionResult.SUCCESS;
+        } else {
+            if(state.getValue(TYPE) == SiloType.SINGLE)
+            {
+                return InteractionResult.FAIL;
+            }
+            MenuProvider menuprovider = this.getMenuProvider(state, level, pos);
+            if (menuprovider != null) {
+                player.openMenu(menuprovider);
+            }
+
+            return InteractionResult.CONSUME;
+        }
     }
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
@@ -46,7 +76,7 @@ public class SiloBlock extends AbstractSiloBlock<SiloBlockEntity> implements Ent
 
     @Override
     protected MapCodec<? extends AbstractSiloBlock<SiloBlockEntity>> codec() {
-        return Kirk.SIMPLE_CODEC.get();
+        return CODEC;
     }
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return (BlockState)this.defaultBlockState().setValue(TYPE, selectCorrectType(context.getLevel(), context.getClickedPos(), context.getLevel().getBlockState(context.getClickedPos())));
@@ -84,9 +114,25 @@ public class SiloBlock extends AbstractSiloBlock<SiloBlockEntity> implements Ent
         //return super.updateShape(state, facing, facingState, level, currentPos, facingPos);
     }
     @javax.annotation.Nullable
-    private boolean candidatePartnerFacing(BlockPlaceContext context, Direction direction) {
-        BlockState blockstate = context.getLevel().getBlockState(context.getClickedPos().relative(direction));
-        return blockstate.is(this) && blockstate.getValue(TYPE) == SiloType.SINGLE;
+    protected MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
+        if(state.getValue(TYPE) == SiloType.SINGLE)
+        {
+            return null;
+        }else if(state.getValue(TYPE) == SiloType.MIDDLE)
+        {
+            return new MenuProvider() {
+                @javax.annotation.Nullable
+                public AbstractContainerMenu createMenu(int p_51622_, Inventory p_51623_, Player p_51624_) {
+                        return SiloMenu.sixRows(p_51622_, p_51623_);
+                }
+
+                public Component getDisplayName() {
+                    return Component.translatable("kirk.container.silo");
+                }
+            };
+        }else {
+            return (MenuProvider) this;
+        }
     }
 
     @Override
@@ -105,5 +151,20 @@ public class SiloBlock extends AbstractSiloBlock<SiloBlockEntity> implements Ent
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
         return new SiloBlockEntity(Kirk.SILO_BLOCK_ENTITY.get(), blockPos, blockState);
+    }
+
+    @Override
+    protected RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
+    @Override
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return switch (state.getValue(TYPE)) {
+            case SiloType.SINGLE -> SINGLE_SHAPE;
+            case SiloType.BOTTOM, SiloType.MIDDLE -> BOTTOM_SHAPE;
+            case SiloType.TOP -> TOP_SHAPE;
+            default -> SINGLE_SHAPE;
+        };
     }
 }

@@ -58,7 +58,6 @@ public class TripleVerticalBlockCombiner {
                     }
                     if(s2 != null && s3 != null && s4 != null)
                     {
-                        Kirk.LOGGER.info("silo");
                         return new NeighborsCombineResult.Triple<S>(s2, s3, s4);
                     }
                 }

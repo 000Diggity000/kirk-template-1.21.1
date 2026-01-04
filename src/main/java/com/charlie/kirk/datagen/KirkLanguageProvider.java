@@ -19,7 +19,7 @@ public class KirkLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         // Adds a translation with the given key and the given value.
-        //add("translation.key.1", "Translation 1");
+        add("kirk.container.silo", "Silo");
         add(Kirk.BAT_ITEM.get(), "Bat");
         add(Kirk.COTTON.get(), "Cotton");
         add(Kirk.SAHUR.get(), "Tung Tung Tung Sahur");

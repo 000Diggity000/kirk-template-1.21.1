@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "kirk:block/silo_top",
+    "side": "kirk:block/silo_side",
+    "particle": "minecraft:block/iron_block"
+  }
+}

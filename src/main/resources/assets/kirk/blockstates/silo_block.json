@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "type=single": {
+      "model": "kirk:block/silo_block"
+    },
+    "type=bottom": {
+      "model": "kirk:block/silo_bottom"
+    },
+    "type=middle": {
+      "model": "kirk:block/silo_middle"
+    },
+    "type=top": {
+      "model": "kirk:block/silo_top"
+    }
+  }
+}
