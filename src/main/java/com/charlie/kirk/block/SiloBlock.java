@@ -6,9 +6,7 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.*;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -34,6 +32,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -110,8 +109,17 @@ public class SiloBlock extends AbstractSiloBlock<SiloBlockEntity> implements Ent
     }
     protected BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
         return (BlockState)this.defaultBlockState().setValue(TYPE, selectCorrectType(level, currentPos, state));
+    }
 
-        //return super.updateShape(state, facing, facingState, level, currentPos, facingPos);
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        switch(state.getValue(TYPE))
+        {
+            case SiloType.TOP -> Containers.dropContentsOnDestroy(state, newState, level, pos.relative(Direction.DOWN));
+            case SiloType.MIDDLE -> Containers.dropContentsOnDestroy(state, newState, level, pos);
+            case SiloType.BOTTOM -> Containers.dropContentsOnDestroy(state, newState, level, pos.relative(Direction.UP));
+        }
+
+        super.onRemove(state, level, pos, newState, isMoving);
     }
     @javax.annotation.Nullable
     protected MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
@@ -121,20 +129,39 @@ public class SiloBlock extends AbstractSiloBlock<SiloBlockEntity> implements Ent
         }else if(state.getValue(TYPE) == SiloType.MIDDLE)
         {
             return new MenuProvider() {
-                @javax.annotation.Nullable
-                public AbstractContainerMenu createMenu(int p_51622_, Inventory p_51623_, Player p_51624_) {
-                        return SiloMenu.sixRows(p_51622_, p_51623_);
+                public @NotNull AbstractContainerMenu createMenu(int p_51622_, Inventory p_51623_, Player p_51624_) {
+                        return SiloMenu.sixRows(p_51622_, p_51623_, blockEntityType.get().getBlockEntity(level, pos));
                 }
 
                 public Component getDisplayName() {
                     return Component.translatable("kirk.container.silo");
                 }
             };
-        }else {
-            return (MenuProvider) this;
+        }else if(state.getValue(TYPE) == SiloType.TOP) {
+            return new MenuProvider() {
+                public @NotNull AbstractContainerMenu createMenu(int p_51622_, Inventory p_51623_, Player p_51624_) {
+                    return SiloMenu.sixRows(p_51622_, p_51623_, blockEntityType.get().getBlockEntity(level, pos.relative(Direction.DOWN)));
+                }
+
+                public Component getDisplayName() {
+                    return Component.translatable("kirk.container.silo");
+                }
+            };
+        }else if(state.getValue(TYPE) == SiloType.BOTTOM)
+        {
+            return new MenuProvider() {
+                public @NotNull AbstractContainerMenu createMenu(int p_51622_, Inventory p_51623_, Player p_51624_) {
+                    return SiloMenu.sixRows(p_51622_, p_51623_, blockEntityType.get().getBlockEntity(level, pos.relative(Direction.UP)));
+                }
+
+                public Component getDisplayName() {
+                    return Component.translatable("kirk.container.silo");
+                }
+            };
+        }else{
+            return null;
         }
     }
-
     @Override
     public TripleVerticalBlockCombiner.NeighborsCombineResult<? extends SiloBlockEntity> combine(BlockState state, Level level, BlockPos pos, boolean var4) {
         return TripleVerticalBlockCombiner.combineWithNeigbours((BlockEntityType)this.blockEntityType.get(), SiloBlock::getBlockType, state, level, pos);
@@ -164,7 +191,6 @@ public class SiloBlock extends AbstractSiloBlock<SiloBlockEntity> implements Ent
             case SiloType.SINGLE -> SINGLE_SHAPE;
             case SiloType.BOTTOM, SiloType.MIDDLE -> BOTTOM_SHAPE;
             case SiloType.TOP -> TOP_SHAPE;
-            default -> SINGLE_SHAPE;
         };
     }
 }

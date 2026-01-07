@@ -15,6 +15,7 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.material.MapColor;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -53,9 +54,16 @@ public class Kirk {
 //    public static final Supplier<MenuType<SiloMenu>> SILO_MENU = MENUS.register("silo_menu", () -> new MenuType((containerId, containerId2) -> new SiloMenu(), FeatureFlags.DEFAULT_FLAGS));
     public static final DeferredBlock<SiloBlock> SILO_BLOCK =
             BLOCKS.register("silo_block", () -> new SiloBlock(BlockBehaviour.Properties.of().destroyTime(2.0f)));
+    public static final DeferredBlock<Block> GUNK_BLOCK =
+            BLOCKS.register("gunk_block", () -> new Block(BlockBehaviour.Properties.of().destroyTime(2.0f).mapColor(MapColor.COLOR_MAGENTA)));
     public static final DeferredItem<BlockItem> SILO_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(
             "silo_block",
             SILO_BLOCK,
+            new Item.Properties()
+    );
+    public static final DeferredItem<BlockItem> GUNK_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(
+            "gunk_block",
+            GUNK_BLOCK,
             new Item.Properties()
     );
 

@@ -1,6 +1,7 @@
 package com.charlie.kirk.block;
 
 import com.charlie.kirk.Kirk;
+import com.charlie.kirk.menu.SiloMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
@@ -17,27 +18,31 @@ import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class SiloBlockEntity extends RandomizableContainerBlockEntity {
-    private NonNullList<ItemStack> items;
+    private final int SIZE = 54;
+    private NonNullList<ItemStack> items = NonNullList.withSize(SIZE, ItemStack.EMPTY);
     public SiloBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
-        this.items = NonNullList.withSize(54, ItemStack.EMPTY);
     }
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-        ContainerHelper.loadAllItems(tag, this.items, registries);
+        if (!this.tryLoadLootTable(tag)) {
+            ContainerHelper.loadAllItems(tag, this.items, registries);
+        }
     }
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        ContainerHelper.saveAllItems(tag, this.items, registries);
+        if (!this.trySaveLootTable(tag)) {
+            ContainerHelper.saveAllItems(tag, this.items, registries);
+        }
 
     }
 
     public SiloBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(Kirk.SILO_BLOCK_ENTITY.get(), blockPos, blockState);
-        this.items = NonNullList.withSize(54, ItemStack.EMPTY);
+        this.items = NonNullList.withSize(SIZE, ItemStack.EMPTY);
     }
 
     @Override
@@ -49,6 +54,17 @@ public class SiloBlockEntity extends RandomizableContainerBlockEntity {
     protected NonNullList<ItemStack> getItems() {
         return items;
     }
+    @Override
+    public void setItem(int slot, ItemStack stack) {
+        stack.limitSize(this.getMaxStackSize(stack));
+        this.items.set(slot, stack);
+        this.setChanged();
+    }
+    @Override
+    public void clearContent() {
+        items.clear();
+        this.setChanged();
+    }
 
     @Override
     protected void setItems(NonNullList<ItemStack> nonNullList) {
@@ -57,11 +73,11 @@ public class SiloBlockEntity extends RandomizableContainerBlockEntity {
 
     @Override
     protected AbstractContainerMenu createMenu(int id, Inventory player) {
-        return ChestMenu.sixRows(id, player, this);
+        return SiloMenu.sixRows(id, player, this);
     }
 
     @Override
     public int getContainerSize() {
-        return 54;
+        return SIZE;
     }
 }
