@@ -33,6 +33,12 @@ public class Events {
         }else if(event.getTabKey() == CreativeModeTabs.COMBAT)
         {
             event.accept(Kirk.BAT_ITEM.get());
+        }else if(event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS)
+        {
+            event.accept(Kirk.GUNK_BLOCK_ITEM.get());
+        }else if(event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS)
+        {
+            event.accept(Kirk.SILO_BLOCK_ITEM.get());
         }
     }
     @SubscribeEvent
