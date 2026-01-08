@@ -2,11 +2,15 @@ package com.charlie.kirk.block;
 
 import com.charlie.kirk.Kirk;
 import com.charlie.kirk.menu.SiloMenu;
+import com.mojang.datafixers.types.templates.Tag;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.TagType;
 import net.minecraft.network.chat.Component;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -54,12 +58,17 @@ public class SiloBlockEntity extends RandomizableContainerBlockEntity {
     protected NonNullList<ItemStack> getItems() {
         return items;
     }
+
     @Override
-    public void setItem(int slot, ItemStack stack) {
-        stack.limitSize(this.getMaxStackSize(stack));
-        this.items.set(slot, stack);
-        this.setChanged();
+    public boolean canPlaceItem(int slot, ItemStack stack) {
+
+        if(!stack.is(ItemTags.FLOWERS))
+        {
+            return false;
+        }
+        return super.canPlaceItem(slot, stack);
     }
+
     @Override
     public void clearContent() {
         items.clear();
