@@ -28,7 +28,6 @@ public abstract class MixinVillager extends AbstractVillager {
         if(itemstack.is(Items.LEAD) && flag)
         {
             itemstack.setCount(itemstack.getCount() - 1);
-            this.makeSound(SoundEvents.VILLAGER_NO);
             cir.setReturnValue(InteractionResult.CONSUME);
         }
     }
