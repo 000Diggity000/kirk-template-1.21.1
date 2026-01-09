@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "end": "kirk:block/gunk_log_top",
+    "side": "kirk:block/gunk_log"
+  }
+}

@@ -25,5 +25,7 @@ public class KirkLanguageProvider extends LanguageProvider {
         add(Kirk.SAHUR.get(), "Tung Tung Tung Sahur");
         add(Kirk.SILO_BLOCK_ITEM.get(), "Silo");
         add(Kirk.GUNK_BLOCK_ITEM.get(), "Gunk");
+        add(Kirk.GUNK_LOG_ITEM.get(), "Gunk Log");
+        add(Kirk.GUNK_LEAVES_ITEM.get(), "Gunk Leaves");
     }
 }

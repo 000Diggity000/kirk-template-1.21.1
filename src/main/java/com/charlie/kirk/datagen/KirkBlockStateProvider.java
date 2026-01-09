@@ -13,5 +13,7 @@ public class KirkBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         simpleBlock(Kirk.GUNK_BLOCK.get());
+        logBlock(Kirk.GUNK_LOG.get());
+        simpleBlock(Kirk.GUNK_LEAVES.get());
     }
 }

@@ -22,7 +22,7 @@ import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class SiloBlockEntity extends RandomizableContainerBlockEntity {
-    private final int SIZE = 54;
+    private final int SIZE = 66;
     private NonNullList<ItemStack> items = NonNullList.withSize(SIZE, ItemStack.EMPTY);
     public SiloBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
@@ -54,19 +54,11 @@ public class SiloBlockEntity extends RandomizableContainerBlockEntity {
         return Component.translatable("kirk.container.silo");
     }
 
+
+
     @Override
     protected NonNullList<ItemStack> getItems() {
         return items;
-    }
-
-    @Override
-    public boolean canPlaceItem(int slot, ItemStack stack) {
-
-        if(!stack.is(ItemTags.FLOWERS))
-        {
-            return false;
-        }
-        return super.canPlaceItem(slot, stack);
     }
 
     @Override

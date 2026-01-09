@@ -35,5 +35,7 @@ public class KirkBlockLootTableProvider extends BlockLootSubProvider {
         // Equivalent to calling add(MyBlocks.EXAMPLE_BLOCK.get(), createSingleItemTable(MyBlocks.EXAMPLE_BLOCK.get()));
         dropSelf(Kirk.SILO_BLOCK.get());
         dropSelf(Kirk.GUNK_BLOCK.get());
+        dropSelf(Kirk.GUNK_LOG.get());
+        dropSelf(Kirk.GUNK_LEAVES.get());
     }
 }

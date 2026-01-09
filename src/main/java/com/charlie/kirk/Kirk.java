@@ -7,15 +7,27 @@ import com.charlie.kirk.entity.SahurMob;
 import com.charlie.kirk.item.BatItem;
 import com.charlie.kirk.menu.SiloMenu;
 import com.mojang.serialization.MapCodec;
+import net.minecraft.client.gui.ComponentPath;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.events.GuiEventListener;
+import net.minecraft.client.gui.navigation.FocusNavigationEvent;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
+import org.apache.http.impl.io.AbstractSessionInputBuffer;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -35,7 +47,10 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.Optional;
 import java.util.function.Supplier;
+
+import static net.minecraft.world.flag.FeatureFlags.DEFAULT_FLAGS;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(Kirk.MODID)
@@ -51,11 +66,13 @@ public class Kirk {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES =
             DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MODID);
     public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(BuiltInRegistries.MENU, MODID);
-//    public static final Supplier<MenuType<SiloMenu>> SILO_MENU = MENUS.register("silo_menu", () -> new MenuType((containerId, containerId2) -> new SiloMenu(), FeatureFlags.DEFAULT_FLAGS));
+    public static final Supplier<MenuType<SiloMenu>> SILO_MENU = MENUS.register("silo_menu", () -> new MenuType<SiloMenu>(SiloMenu::sixRows, DEFAULT_FLAGS));
     public static final DeferredBlock<SiloBlock> SILO_BLOCK =
             BLOCKS.register("silo_block", () -> new SiloBlock(BlockBehaviour.Properties.of().destroyTime(2.0f)));
     public static final DeferredBlock<Block> GUNK_BLOCK =
-            BLOCKS.register("gunk_block", () -> new Block(BlockBehaviour.Properties.of().destroyTime(2.0f).mapColor(MapColor.COLOR_MAGENTA)));
+            BLOCKS.register("gunk_block", () -> new Block(BlockBehaviour.Properties.of().destroyTime(2.0f).mapColor(MapColor.COLOR_MAGENTA).sound(SoundType.MUD)));
+    public static final DeferredBlock<RotatedPillarBlock> GUNK_LOG = BLOCKS.register("gunk_log", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().destroyTime(2.0f).mapColor(MapColor.COLOR_MAGENTA).sound(SoundType.WOOD).ignitedByLava()));
+    public static final DeferredBlock<LeavesBlock> GUNK_LEAVES = BLOCKS.register("gunk_leaves", () -> new LeavesBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(0.2F).randomTicks().noOcclusion().ignitedByLava().pushReaction(PushReaction.DESTROY).sound(SoundType.GRASS)));
     public static final DeferredItem<BlockItem> SILO_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(
             "silo_block",
             SILO_BLOCK,
@@ -64,6 +81,16 @@ public class Kirk {
     public static final DeferredItem<BlockItem> GUNK_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(
             "gunk_block",
             GUNK_BLOCK,
+            new Item.Properties()
+    );
+    public static final DeferredItem<BlockItem> GUNK_LOG_ITEM = ITEMS.registerSimpleBlockItem(
+            "gunk_log",
+            GUNK_LOG,
+            new Item.Properties()
+    );
+    public static final DeferredItem<BlockItem> GUNK_LEAVES_ITEM = ITEMS.registerSimpleBlockItem(
+            "gunk_leaves",
+            GUNK_LEAVES,
             new Item.Properties()
     );
 
@@ -104,6 +131,7 @@ public class Kirk {
         ENTITY_TYPES.register(modEventBus);
         CODECS.register(modEventBus);
         BLOCK_ENTITY_TYPES.register(modEventBus);
+        MENUS.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (Kirk) to respond directly to events.
@@ -133,4 +161,5 @@ public class Kirk {
         // Do something when the server starts
         LOGGER.info("HELLO from server starting");
     }
+
 }

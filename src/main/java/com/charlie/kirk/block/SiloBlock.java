@@ -6,6 +6,7 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Inventory;
@@ -60,7 +61,7 @@ public class SiloBlock extends AbstractSiloBlock<SiloBlockEntity> implements Ent
                 return InteractionResult.FAIL;
             }
             MenuProvider menuprovider = this.getMenuProvider(state, level, pos);
-            if (menuprovider != null) {
+            if (menuprovider != null && player instanceof ServerPlayer) {
                 player.openMenu(menuprovider);
             }
 

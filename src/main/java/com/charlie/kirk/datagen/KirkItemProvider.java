@@ -22,6 +22,8 @@ public class KirkItemProvider extends ItemModelProvider {
         // texture path, relative to textures/item, must match.
         withExistingParent(Kirk.SILO_BLOCK_ITEM.getId().toString(), modLoc("block/silo_block"));
         withExistingParent(Kirk.GUNK_BLOCK_ITEM.getId().toString(), modLoc("block/gunk_block"));
+        withExistingParent(Kirk.GUNK_LOG_ITEM.getId().toString(), modLoc("block/gunk_log"));
+        withExistingParent(Kirk.GUNK_LEAVES_ITEM.getId().toString(), modLoc("block/gunk_leaves"));
         basicItem(Kirk.COTTON.get());
     }
 }
