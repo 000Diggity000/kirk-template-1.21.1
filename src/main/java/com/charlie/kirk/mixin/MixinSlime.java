@@ -33,7 +33,6 @@ public abstract class MixinSlime extends Mob implements Enemy {
     @Overwrite
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
         this.setSize(10, true);
-        Kirk.LOGGER.info("HELLO from server starting");
         return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
     }
     @Shadow

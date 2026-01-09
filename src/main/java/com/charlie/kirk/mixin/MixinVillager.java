@@ -20,15 +20,19 @@ public abstract class MixinVillager extends AbstractVillager {
     public MixinVillager(EntityType<? extends AbstractVillager> entityType, Level level) {
         super(entityType, level);
     }
-    @Inject(method="mobInteract", at = @At("HEAD"), cancellable = true)
+    @Inject(method="mobInteract", at = @At("HEAD"))
     protected void onMobInteract(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir)
     {
         ItemStack itemstack = player.getItemInHand(hand);
-        boolean flag = this.getOffers().isEmpty();
-        if(itemstack.is(Items.LEAD) && flag)
+        //boolean flag = this.getOffers().isEmpty();
+        if(itemstack.is(Items.LEAD))
         {
             itemstack.setCount(itemstack.getCount() - 1);
-            cir.setReturnValue(InteractionResult.CONSUME);
+            if(!this.level().isClientSide())
+            {
+                cir.setReturnValue(InteractionResult.CONSUME);
+            }
+
         }
     }
 
