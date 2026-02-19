@@ -1,0 +1,121 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "kirk:log_block",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "log_type": "oak"
+              }
+            }
+          ],
+          "name": "minecraft:oak_log"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "kirk:log_block",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "log_type": "birch"
+              }
+            }
+          ],
+          "name": "minecraft:birch_log"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "kirk:log_block",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "log_type": "dark_oak"
+              }
+            }
+          ],
+          "name": "minecraft:dark_oak_log"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "kirk:log_block",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "log_type": "acacia"
+              }
+            }
+          ],
+          "name": "minecraft:acacia_log"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "kirk:log_block",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "log_type": "jungle"
+              }
+            }
+          ],
+          "name": "minecraft:jungle_log"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "kirk:log_block",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "log_type": "mangrove"
+              }
+            }
+          ],
+          "name": "minecraft:mangrove_log"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "kirk:log_block",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "log_type": "cherry"
+              }
+            }
+          ],
+          "name": "minecraft:cherry_log"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "kirk:log_block",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "log_type": "spruce"
+              }
+            }
+          ],
+          "name": "minecraft:spruce_log"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "kirk:blocks/log_block"
+}

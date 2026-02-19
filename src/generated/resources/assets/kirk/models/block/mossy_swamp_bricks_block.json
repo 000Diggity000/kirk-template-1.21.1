@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "kirk:block/mossy_swamp_bricks_block"
+  }
+}

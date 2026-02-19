@@ -1,0 +1,23 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "kirk"
+    }
+  ],
+  "type": "neoforge:add_table",
+  "conditions": [
+    {
+      "block": "minecraft:oak_log",
+      "condition": "minecraft:block_state_property"
+    },
+    {
+      "chance": 0.2,
+      "condition": "minecraft:random_chance"
+    },
+    {
+      "condition": "minecraft:survives_explosion"
+    }
+  ],
+  "table": "kirk:resin"
+}

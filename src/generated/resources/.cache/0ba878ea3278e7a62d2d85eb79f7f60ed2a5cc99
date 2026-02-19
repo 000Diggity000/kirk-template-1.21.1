@@ -1,0 +1,4 @@
+// 1.21.1	2026-02-18T10:08:21.150369873	Global Loot Modifiers : kirk
+357b01d8bac17da66190f3e66dcd00d5362a0c0c data/kirk/loot_modifiers/oak_log_modifier.json
+22bffac7c23f06830a218a79f8e3362464778c44 data/kirk/loot_modifiers/spruce_log_modifier.json
+8e7707c1361fb7ed0199f3fe99966f9e2a3962d5 data/neoforge/loot_modifiers/global_loot_modifiers.json
