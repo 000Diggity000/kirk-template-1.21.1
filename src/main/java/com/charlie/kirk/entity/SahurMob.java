@@ -40,7 +40,7 @@ public class SahurMob extends Monster {
     }
     protected void addBehaviourGoals() {
         this.goalSelector.addGoal(2, new SahurAttackGoal(this, (double)1.0F, false));
-        this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, (double)1.0F));
+        this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, (double)1.0F));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal(this, Player.class, true));
     }
     public static AttributeSupplier.Builder createAttributes() {

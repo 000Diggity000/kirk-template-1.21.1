@@ -59,6 +59,10 @@ public abstract class MixinInventorymenu{
         this.minecraft = minecraft;
     }
 
+    /**
+     * @author
+     * @reason
+     */
     @Overwrite
     public void openItemGui(ItemStack stack, InteractionHand hand) {
         if (stack.is(Items.WRITABLE_BOOK)) {

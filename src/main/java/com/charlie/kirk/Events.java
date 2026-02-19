@@ -3,8 +3,9 @@ package com.charlie.kirk;
 import com.charlie.kirk.block.SiloBlockRenderer;
 import com.charlie.kirk.data.TeleportBookRecord;
 import com.charlie.kirk.datagen.*;
+import com.charlie.kirk.entity.SahurEntityModel;
 import com.charlie.kirk.entity.SahurMob;
-import com.charlie.kirk.entity.SahurRenderer;
+import com.charlie.kirk.entity.ShahurRenderer;
 import com.charlie.kirk.menu.SiloContainerScreen;
 import com.charlie.kirk.menu.SiloMenu;
 import com.google.common.collect.ImmutableList;
@@ -78,7 +79,7 @@ public class Events {
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event)
     {
-        EntityRenderers.register(Kirk.SAHUR.get(), SahurRenderer::new);
+        EntityRenderers.register(Kirk.SAHUR.get(), ShahurRenderer::new);
     }
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event)
@@ -114,6 +115,11 @@ public class Events {
                 )
         );
         event.getGenerator().addProvider(event.includeServer(), new KirkGlobalLootModifierProvider(event.getGenerator().getPackOutput(), event.getLookupProvider()));
+    }
+    @SubscribeEvent
+    public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        // This "links" your kirk:sahur#main ID to the Java code that builds the cubes
+        event.registerLayerDefinition(SahurEntityModel.LAYER_LOCATION, SahurEntityModel::createBodyLayer);
     }
     @SubscribeEvent
     public static void onRegisterNamedRenderTypes(RegisterNamedRenderTypesEvent event)

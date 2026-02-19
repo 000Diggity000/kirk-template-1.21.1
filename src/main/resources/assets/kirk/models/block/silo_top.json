@@ -1,7 +1,7 @@
 {
 	"format_version": "1.9.0",
 	"credit": "Made with Blockbench",
-	"parent": "silo_bottom",
+	"parent": "block",
 	"texture_size": [64, 64],
 	"textures": {
 		"1": "kirk:block/silo_top_multi",
