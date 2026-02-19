@@ -2,9 +2,14 @@
   "block.kirk.gunk_block": "Gunk",
   "block.kirk.gunk_leaves": "Gunk Leaves",
   "block.kirk.gunk_log": "Gunk Log",
+  "block.kirk.log_block": "Log",
+  "block.kirk.mossy_swamp_bricks_block": "Mossy Swamp Bricks",
+  "block.kirk.sewer_dirt": "Sewer Dirt",
   "block.kirk.silo_block": "Silo",
+  "block.kirk.swamp_bricks_block": "Swamp Bricks",
   "entity.kirk.sahur": "Tung Tung Tung Sahur",
   "item.kirk.bat_item": "Bat",
+  "item.kirk.core_wood": "Core Wood",
   "item.kirk.cotton": "Cotton",
   "kirk.container.silo": "Silo"
 }

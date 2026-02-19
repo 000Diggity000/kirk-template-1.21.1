@@ -1,5 +1,10 @@
-// 1.21.1	2026-01-09T09:21:31.586201724	Loot Tables
+// 1.21.1	2026-02-16T18:43:06.83294621	Loot Tables
 0806628e9231b76822e726c54b22c78e1f3ec488 data/kirk/loot_table/blocks/gunk_block.json
 47e29687852b913f713414c2fba823b0fd0b1025 data/kirk/loot_table/blocks/gunk_leaves.json
 6ddd3efe396c5b2897ebd44555b4376548cda935 data/kirk/loot_table/blocks/gunk_log.json
+8be3df258e17739e46b45be9039a10f37d735f0e data/kirk/loot_table/blocks/log_block.json
+e923a74e739adf9edbebe9e6defb3b1805ae395d data/kirk/loot_table/blocks/mossy_swamp_bricks_block.json
+6673b71e16434b29d1b37462941cee360b75455c data/kirk/loot_table/blocks/sewer_dirt.json
+21206a8754718337297bae5f853fe0135f0d567d data/kirk/loot_table/blocks/sewer_farmland.json
 2d97b846b51f4cd2f9c805e7efd9852f335c01ea data/kirk/loot_table/blocks/silo_block.json
+dcfe1b9322b90c28cf67968c36f88ead0e505778 data/kirk/loot_table/blocks/swamp_bricks_block.json

@@ -27,5 +27,10 @@ public class KirkLanguageProvider extends LanguageProvider {
         add(Kirk.GUNK_BLOCK_ITEM.get(), "Gunk");
         add(Kirk.GUNK_LOG_ITEM.get(), "Gunk Log");
         add(Kirk.GUNK_LEAVES_ITEM.get(), "Gunk Leaves");
+        add(Kirk.SWAMP_BRICKS_ITEM.get(), "Swamp Bricks");
+        add(Kirk.MOSSY_SWAMP_BRICKS_ITEM.get(), "Mossy Swamp Bricks");
+        add(Kirk.SEWER_DIRT.get(), "Sewer Dirt");
+        add(Kirk.LOG_BLOCK.get(), "Log");
+        add(Kirk.CORE_WOOD.get(), "Core Wood");
     }
 }

@@ -2,7 +2,12 @@
   "required": true,
   "package": "com.charlie.kirk.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": ["MixinSlime", "MixinVillager"],
+  "mixins": [
+    "MixinInventorymenu",
+    "MixinSlime",
+    "MixinVillager",
+    "MixinBlock"
+  ],
   "injectors": {
     "defaultRequire": 1
   },

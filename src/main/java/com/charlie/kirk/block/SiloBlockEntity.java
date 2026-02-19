@@ -4,6 +4,7 @@ import com.charlie.kirk.Kirk;
 import com.charlie.kirk.menu.SiloMenu;
 import com.mojang.datafixers.types.templates.Tag;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -80,5 +81,14 @@ public class SiloBlockEntity extends RandomizableContainerBlockEntity {
     @Override
     public int getContainerSize() {
         return SIZE;
+    }
+
+    public boolean shouldRenderFace(Direction direction) {
+        if(direction.getAxis().isVertical())
+        {
+            return false;
+        }else{
+            return true;
+        }
     }
 }

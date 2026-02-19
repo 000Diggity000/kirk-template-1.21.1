@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "moisture=0": {
+      "model": "kirk:block/sewer_farmland"
+    },
+    "moisture=1": {
+      "model": "kirk:block/sewer_farmland"
+    },
+    "moisture=2": {
+      "model": "kirk:block/sewer_farmland"
+    },
+    "moisture=3": {
+      "model": "kirk:block/sewer_farmland"
+    },
+    "moisture=4": {
+      "model": "kirk:block/sewer_farmland"
+    },
+    "moisture=5": {
+      "model": "kirk:block/sewer_farmland"
+    },
+    "moisture=6": {
+      "model": "kirk:block/sewer_farmland"
+    },
+    "moisture=7": {
+      "model": "kirk:block/wet_sewer_farmland"
+    }
+  }
+}

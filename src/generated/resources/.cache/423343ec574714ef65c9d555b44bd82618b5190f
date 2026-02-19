@@ -1,6 +1,11 @@
-// 1.21.1	2026-01-09T09:24:04.404781666	Item Models: kirk
+// 1.21.1	2026-02-15T12:31:41.759567525	Item Models: kirk
 795e3c4e0a5361521abe9084dba35f46daa4b824 assets/kirk/models/item/cotton.json
 aba2c824c5e6e499df8615240ee98eeae745fe5e assets/kirk/models/item/gunk_block.json
 f4afc2347a436a645fd1eab3ef5fc53792aaae4f assets/kirk/models/item/gunk_leaves.json
 31bf960e497a21dfc2eecc1c0c63c4dfd3cd5f45 assets/kirk/models/item/gunk_log.json
+37e942f4441c2f5e70e260922e25301a07761fdc assets/kirk/models/item/mossy_swamp_bricks.json
+6236e3112a7ef8d75ee9657a06ab5357b37057b9 assets/kirk/models/item/resin.json
+9f2164ecc31937cbfe45def6e93218ffe146b915 assets/kirk/models/item/sewer_dirt_item.json
+e2e7808e1d6e45bc28e52029392f3d3157fc81f9 assets/kirk/models/item/sewer_farmland_item.json
 ecd1b152f542325e7a8475a2f0dfa4ce29513043 assets/kirk/models/item/silo_block.json
+155c9e46ba4a3bed5f262dde59d64eafd8c4d53a assets/kirk/models/item/swamp_bricks.json

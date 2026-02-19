@@ -1,8 +1,14 @@
-// 1.21.1	2026-01-09T09:21:31.585998054	Block States: kirk
+// 1.21.1	2026-02-14T09:58:28.79561029	Block States: kirk
 c211076f9893f763571fcee62565f5e2ece5f3fb assets/kirk/blockstates/gunk_block.json
 538af40e43983ab1b75b407632ed24e9f85c9a0a assets/kirk/blockstates/gunk_leaves.json
 325501fb1f71bf3ec05c1819ca1f7ac32579f9a5 assets/kirk/blockstates/gunk_log.json
+de3ca0ddc5d66b76f1f9019c513626ded0f3acd2 assets/kirk/blockstates/mossy_swamp_bricks_block.json
+148028bb7a90eca4d06554a1478910593ec2ce13 assets/kirk/blockstates/sewer_dirt.json
+ad1fed227a9b5c21b34d2b445955e8d15733ef3c assets/kirk/blockstates/swamp_bricks_block.json
 c3ec6a840a1fbeb3fd9c90dd260107e32405a2c5 assets/kirk/models/block/gunk_block.json
 a24004ee7ae493dacdd474936f0ea4a927ce792c assets/kirk/models/block/gunk_leaves.json
 e68f4b47db8f82cbf2224e7c027999fc71637bb0 assets/kirk/models/block/gunk_log.json
 f63ffa65ff3da420a5a57fcaf42a2e8bc97f3fcf assets/kirk/models/block/gunk_log_horizontal.json
+765249b3ef7ace31366633b0663dcbebffca346d assets/kirk/models/block/mossy_swamp_bricks_block.json
+6097862b61e09729a4e62f99c810341a03061cf9 assets/kirk/models/block/sewer_dirt.json
+63837ae7317bc8c4eb1b91b87011df3bc1ba475c assets/kirk/models/block/swamp_bricks_block.json

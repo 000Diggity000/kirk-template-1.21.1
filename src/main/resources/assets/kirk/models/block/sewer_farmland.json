@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_farmland",
+  "textures": {
+    "dirt": "kirk:block/sewer_dirt",
+    "top": "kirk:block/sewer_farmland"
+  }
+}
